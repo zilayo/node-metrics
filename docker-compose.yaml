@@ -14,7 +14,7 @@ services:
       - '127.0.0.1:9090:9090' # metrics
     command:
       - --config.file=/etc/prometheus/prometheus.yml
-      - --storage.tsdb.path=/prometheusdata
+      - --storage.tsdb.path=/prometheus
     volumes:
       - ${PWD}/prometheus/:/etc/prometheus/ # bind mount container's /etc/prometheus to ./prometheus
       - prometheus_data:/prometheus # volume mount prometheus data
