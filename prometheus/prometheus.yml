@@ -1,0 +1,37 @@
+global:
+  scrape_interval:     15s
+  evaluation_interval: 15s
+  
+scrape_configs:
+# Prometheus in this container
+  - job_name: prometheus
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['localhost:9090']
+
+# Reth on host machine        
+  - job_name: reth
+    metrics_path: "/"
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['http://host.docker.internal:5050']
+
+# Lighthouse on host machine   
+  - job_name: lighthouse
+    metrics_path: "/metrics"
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['http://host.docker.internal:5054']
+
+# Node exporter on host machine     
+  - job_name: node-exporter
+    scrape_interval: 1s
+    static_configs:
+      - targets: ['http://host.docker.internal:9100']
+
+# Metrics exporter in another container 
+  - job_name: ethereum-metrics-exporter
+    metrics_path: "/metrics"
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['http://eth-metrics-exporter:9050']
