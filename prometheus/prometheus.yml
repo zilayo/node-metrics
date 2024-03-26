@@ -34,4 +34,4 @@ scrape_configs:
     metrics_path: "/metrics"
     scrape_interval: 5s
     static_configs:
-      - targets: ['http://eth-metrics-exporter:9050']
+      - targets: ['eth-metrics-exporter:9050']
