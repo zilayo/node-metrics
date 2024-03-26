@@ -52,7 +52,7 @@ services:
     ports:
       - '127.0.0.1:9050:9050' # metrics
     volumes:
-      - ${PWD}/ethereum-metrics-config.yaml:/root/config.yaml
+      - ${PWD}/eth-metrics/config.yaml:/root/config.yaml
     command:
       - --config=/root/config.yaml
       - --metrics-port=9050
