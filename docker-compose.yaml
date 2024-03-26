@@ -17,13 +17,12 @@ services:
       - --storage.tsdb.path=/prometheusdata
     volumes:
       - ${PWD}/prometheus/:/etc/prometheus/ # bind mount container's /etc/prometheus to ./prometheus
-      - prometheus_data:/prometheusdata # volume mount prometheus data
+      - prometheus_data:/prometheus # volume mount prometheus data
     restart: unless-stopped
     networks:
       - eth-mainnet
     extra_hosts:
       - 'host.docker.internal:host-gateway'
-    user: '65534:65534' # Fixes permissions issue
 
   grafana:
     restart: unless-stopped
