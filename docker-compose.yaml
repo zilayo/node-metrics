@@ -1,10 +1,12 @@
 networks:
-  eth-mainnet:
+  metrics:
     ipam:
       driver: default
       config:
         - subnet: 172.20.0.0/16
           gateway: 172.20.0.1
+  op-node-devops_base:
+    external: true
 
 services:
   prometheus:
@@ -20,7 +22,8 @@ services:
       - prometheus_data:/prometheus # volume mount prometheus data
     restart: unless-stopped
     networks:
-      - eth-mainnet
+      - metrics
+      - op-node-devops_base
     extra_hosts:
       - 'host.docker.internal:host-gateway'
 
@@ -42,7 +45,8 @@ services:
       find /etc/grafana/provisioning/dashboards/ -name '*.json' -exec sed -i 's/$${DS_PROMETHEUS}/Prometheus/g' {} \+ &&
       /run.sh"
     networks:
-      - eth-mainnet
+      - metrics
+      - op-node-devops_base
     extra_hosts:
       - 'host.docker.internal:host-gateway'
 
@@ -58,7 +62,7 @@ services:
       - --metrics-port=9050
       - --execution-modules="eth,net,web3"
     networks:
-      - eth-mainnet
+      - metrics
     extra_hosts:
       - 'host.docker.internal:host-gateway'
 
