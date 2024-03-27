@@ -38,14 +38,14 @@ scrape_configs:
         
 # Base Op-Geth
   - job_name: base-op-geth
-    metrics_path: "/"
+    metrics_path: "/debug/metrics"
     scrape_interval: 5s
     static_configs:
-      - targets: ['host.docker.internal:5060']
+      - targets: ['op-geth:5060']
         
 # Base Op-Node
   - job_name: base-op-node
     metrics_path: "/"
     scrape_interval: 5s
     static_configs:
-      - targets: ['host.docker.internal:5065']
+      - targets: ['op-node:5065']
