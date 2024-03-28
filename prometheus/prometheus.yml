@@ -38,7 +38,7 @@ scrape_configs:
         
 # Base Op-Geth
   - job_name: base-op-geth
-    metrics_path: "/debug/metrics"
+    metrics_path: "/debug/metrics/prometheus"
     scrape_interval: 5s
     static_configs:
       - targets: ['op-geth:5060']
