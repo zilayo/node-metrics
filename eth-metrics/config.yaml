@@ -1,10 +1,10 @@
 consensus:
   enabled: true
-  url: "http://host.docker.internal:5052"
+  url: "http://host.docker.internal:5052" # mainnet lighthouse beacon node api
   name: "consensus-client"
 execution:
   enabled: true
-  url: "http://host.docker.internal:8545"
+  url: "http://host.docker.internal:8545" # mainnet reth rpc
   name: "execution-client"
   modules:
     - "eth"

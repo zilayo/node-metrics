@@ -5,7 +5,7 @@ networks:
       config:
         - subnet: 172.20.0.0/16
           gateway: 172.20.0.1
-  op-node-devops_base:
+  base_blockchain_node:
     external: true
 
 services:
@@ -23,7 +23,7 @@ services:
     restart: unless-stopped
     networks:
       - metrics
-      - op-node-devops_base
+      - base_blockchain_node
     extra_hosts:
       - 'host.docker.internal:host-gateway'
 
@@ -46,7 +46,6 @@ services:
       /run.sh"
     networks:
       - metrics
-      - op-node-devops_base
     extra_hosts:
       - 'host.docker.internal:host-gateway'
 

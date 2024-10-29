@@ -9,7 +9,7 @@ scrape_configs:
     static_configs:
       - targets: ['localhost:9090']
 
-# Reth on host machine        
+# Reth        
   - job_name: reth
     metrics_path: "/"
     scrape_interval: 5s
@@ -38,9 +38,7 @@ scrape_configs:
     scrape_interval: 5s
     static_configs:
       - targets: ['eth-metrics-exporter:9050']
-        
 
-        
 # Base Op-Node
   - job_name: base-op-node
     metrics_path: "/"

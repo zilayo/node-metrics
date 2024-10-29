@@ -12,22 +12,22 @@
   "__elements": {},
   "__requires": [
     {
-      "type": "panel",
-      "id": "barchart",
-      "name": "Bar chart",
-      "version": ""
-    },
-    {
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "10.4.1"
+      "version": "11.1.0"
     },
     {
       "type": "datasource",
       "id": "prometheus",
       "name": "Prometheus",
       "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "timeseries",
+      "name": "Time series",
+      "version": ""
     }
   ],
   "annotations": {
@@ -42,12 +42,6 @@
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
-        "target": {
-          "limit": 100,
-          "matchAny": false,
-          "tags": [],
-          "type": "dashboard"
-        },
         "type": "dashboard"
       }
     ]
@@ -57,143 +51,26 @@
   "graphTooltip": 0,
   "id": null,
   "links": [],
-  "liveNow": false,
   "panels": [
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "axisSoftMax": 1,
-            "axisSoftMin": 0.98,
-            "fillOpacity": 80,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineWidth": 1,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "fieldMinMax": false,
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "percentunit"
-        },
-        "overrides": []
-      },
+      "collapsed": false,
       "gridPos": {
-        "h": 7,
+        "h": 1,
         "w": 24,
         "x": 0,
         "y": 0
       },
-      "id": 4,
-      "options": {
-        "barRadius": 0,
-        "barWidth": 0.97,
-        "fullHighlight": false,
-        "groupWidth": 0.7,
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": false
-        },
-        "orientation": "horizontal",
-        "showValue": "always",
-        "stacking": "none",
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        },
-        "xField": "instance",
-        "xTickLabelRotation": 0,
-        "xTickLabelSpacing": 0
-      },
-      "pluginVersion": "10.2.3",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "code",
-          "exemplar": false,
-          "expr": "increase(validator_monitor_attestation_simulator_head_attester_hit_total[$__range]) /\n  (increase(validator_monitor_attestation_simulator_head_attester_hit_total[$__range]) +\n    increase(validator_monitor_attestation_simulator_head_attester_miss_total[$__range]))",
-          "format": "table",
-          "fullMetaSearch": false,
-          "includeNullMetadata": true,
-          "instant": true,
-          "legendFormat": "__auto",
-          "range": false,
-          "refId": "A",
-          "useBackend": false
-        }
-      ],
-      "title": "Head Vote Success",
-      "transformations": [
-        {
-          "id": "sortBy",
-          "options": {
-            "fields": {},
-            "sort": [
-              {
-                "desc": true,
-                "field": "Value"
-              }
-            ]
-          }
-        },
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {
-              "Time": true,
-              "job": true,
-              "network": true
-            },
-            "includeByName": {},
-            "indexByName": {},
-            "renameByName": {}
-          }
-        }
-      ],
-      "type": "barchart"
+      "id": 3,
+      "panels": [],
+      "title": "Block Validation",
+      "type": "row"
     },
     {
       "datasource": {
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "",
+      "description": "This tracks the proportion of various tasks that take up time during block validation",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -205,24 +82,32 @@
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
-            "axisSoftMax": 1,
-            "axisSoftMin": 0.98,
-            "fillOpacity": 80,
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 25,
             "gradientMode": "none",
             "hideFrom": {
               "legend": false,
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
             "lineWidth": 1,
+            "pointSize": 5,
             "scaleDistribution": {
               "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "percent"
             },
             "thresholdsStyle": {
               "mode": "off"
             }
           },
-          "fieldMinMax": false,
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -230,43 +115,36 @@
               {
                 "color": "green",
                 "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
               }
             ]
           },
-          "unit": "percentunit"
+          "unit": "s"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
-        "w": 24,
+        "h": 8,
+        "w": 12,
         "x": 0,
-        "y": 7
+        "y": 1
       },
-      "id": 5,
+      "id": 1,
       "options": {
-        "barRadius": 0,
-        "barWidth": 0.97,
-        "fullHighlight": false,
-        "groupWidth": 0.7,
         "legend": {
           "calcs": [],
           "displayMode": "list",
           "placement": "bottom",
-          "showLegend": false
+          "showLegend": true
         },
-        "orientation": "horizontal",
-        "showValue": "always",
-        "stacking": "none",
         "tooltip": {
           "mode": "single",
           "sort": "none"
-        },
-        "xField": "instance",
-        "xTickLabelRotation": 0,
-        "xTickLabelSpacing": 0
+        }
       },
-      "pluginVersion": "10.2.3",
       "targets": [
         {
           "datasource": {
@@ -274,77 +152,195 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "disableTextWrap": false,
-          "editorMode": "code",
-          "exemplar": false,
-          "expr": "increase(validator_monitor_attestation_simulator_target_attester_hit_total[$__range]) /\n  (increase(validator_monitor_attestation_simulator_target_attester_hit_total[$__range]) +\n    increase(validator_monitor_attestation_simulator_target_attester_miss_total[$__range]))",
-          "format": "table",
+          "editorMode": "builder",
+          "expr": "reth_sync_block_validation_state_root_duration{instance=\"$instance\"}",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
-          "instant": true,
-          "legendFormat": "__auto",
-          "range": false,
+          "instant": false,
+          "legendFormat": "State Root Duration",
+          "range": true,
           "refId": "A",
+          "useBackend": false
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "reth_sync_execution_execution_duration{instance=\"$instance\"}",
+          "fullMetaSearch": false,
+          "hide": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "Execution Duration",
+          "range": true,
+          "refId": "B",
           "useBackend": false
         }
       ],
-      "title": "Target Vote Success",
-      "transformations": [
-        {
-          "id": "sortBy",
-          "options": {
-            "fields": {},
-            "sort": [
+      "title": "Block Validation Overview",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "description": "This tracks the total block validation latency, as well as the latency for validation sub-tasks ",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 25,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "normal"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
               {
-                "desc": true,
-                "field": "Value"
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
               }
             ]
-          }
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 1
+      },
+      "id": 2,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "reth_sync_block_validation_state_root_duration{instance=\"$instance\"}",
+          "fullMetaSearch": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "State Root Duration",
+          "range": true,
+          "refId": "A",
+          "useBackend": false
         },
         {
-          "id": "organize",
-          "options": {
-            "excludeByName": {
-              "Time": true,
-              "job": true,
-              "network": true
-            },
-            "includeByName": {},
-            "indexByName": {},
-            "renameByName": {}
-          }
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "reth_sync_execution_execution_duration{instance=\"$instance\"}",
+          "fullMetaSearch": false,
+          "hide": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "Execution Duration",
+          "range": true,
+          "refId": "B",
+          "useBackend": false
         }
       ],
-      "type": "barchart"
+      "title": "Block Validation Latency",
+      "type": "timeseries"
     }
   ],
-  "refresh": "",
+  "refresh": "30s",
   "schemaVersion": 39,
   "tags": [],
   "templating": {
     "list": [
       {
+        "current": {},
         "datasource": {
           "type": "prometheus",
-          "uid": "b204e0bd-1b02-41f7-903e-8614d3bf4cd3"
+          "uid": "${DS_PROMETHEUS}"
         },
-        "filters": [],
+        "definition": "query_result(reth_info)",
         "hide": 0,
-        "label": "Ad-Hoc Variable",
-        "name": "query0",
+        "includeAll": false,
+        "label": "instance",
+        "multi": false,
+        "name": "instance",
+        "options": [],
+        "query": {
+          "qryType": 3,
+          "query": "query_result(reth_info)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "/.*instance=\\\"([^\\\"]*).*/",
         "skipUrlSync": false,
-        "type": "adhoc"
+        "sort": 0,
+        "type": "query"
       }
     ]
   },
   "time": {
-    "from": "now-12h",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {},
-  "timezone": "",
-  "title": "Attestation Simulator",
-  "uid": "b27be6be-6d0d-41da-b10e-7506732b9b8b",
+  "timezone": "browser",
+  "title": "Reth - Performance",
+  "uid": "bdywb3xjphfy8a",
   "version": 2,
   "weekStart": ""
 }
